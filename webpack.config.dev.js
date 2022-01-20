@@ -2,10 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const ProgressPlugin = require("progress-webpack-plugin");
 
 module.exports = {
@@ -24,6 +21,8 @@ module.exports = {
             "@images": path.resolve(__dirname, "src/assets/images/"),
         },
     },
+    mode: "development",
+    watch: true,
     module: {
         rules: [
             {
@@ -75,7 +74,6 @@ module.exports = {
             ],
         }),
         new Dotenv(),
-        new CleanWebpackPlugin(),
         new ProgressPlugin({
             activeModules: false,
             entries: true,
@@ -90,8 +88,4 @@ module.exports = {
             percentBy: null,
         }),
     ],
-    optimization: {
-        minimize: true,
-        minimizer: [new CssMinimizerPlugin(), new TerserPlugin()],
-    },
 };
